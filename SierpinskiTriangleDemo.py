@@ -7,6 +7,7 @@ from numpy.core.defchararray import lower
 import random
 import keyboard
 
+#Colors
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 RED = (255,0,0)
@@ -30,55 +31,41 @@ def main():
 
 offset = 60
 
+#Length of each side of the triangle is based on the height of the window and the offset margin.
 length = (window_height-2*offset)/(sin(pi/3))
 
+#Finds a random point inside our triangle.
 def findRand():
     rand_x = random.uniform(left[0],right[0])
     rand_y = random.uniform(offset,left[1])
     rand_point = (rand_x,rand_y)
     while(degree(left,rand_point) > pi/3 or degree(right,rand_point) < 2*pi/3or degree(right,rand_point) > pi):
-        print("bad")
+        print("bad starting point.")
         rand_x = random.uniform(left[0],right[0])
         rand_y = random.uniform(offset,left[1])
         rand_point = (rand_x,rand_y)
     return rand_point
 
+#Calculates the degree between two points with p1 being the base point and p2 being the degree determiner. Degree value is from -pi to pi.
 def degree(p1, p2):
     ydist = -1*(p2[1]-p1[1])
     xdist = p2[0]-p1[0]
-    # print(xdist)
-    # print(ydist)
     ang = atan2(ydist,xdist)
     print(ang* 180/pi)
     return ang
 
-# print("")
-# leftCenterDegree = degree(left,center)
-# leftDegree = degree(left,rand_point)
-# print("")
-# rightCenterDegree = degree(right,center)
-# rightDegree = degree(right,rand_point)
-# print("")
-
-# print(leftDegree > pi/3)
-# print(rightDegree < 2*pi/3)
-# print(rightDegree > pi)
-
+#Draws the point with the given color.
 def draw(p1, color):
     pygame.draw.circle(display_surf, color , p1, 1, 1)
 
+#Checks if the program is closed.
 def isQuit():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
-def reset():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-
+#Point chooses a random vertex of the triangle and moves half the distance. Updated the color.
 def move(point):
     pivot = random.randint(1,3)
     if(pivot == 1):
@@ -96,10 +83,9 @@ def move(point):
     new_point = (newx,newy)
     return (new_point,color)
     
-
-
 display_surf.fill(BLACK)
 
+#Vertices of the big triangle.
 center = (window_width/2, offset)
 left = (window_width/2-length*cos(pi/3),offset + length*sin(pi/3))
 right = (window_width/2+length*cos(pi/3),offset + length*sin(pi/3))
