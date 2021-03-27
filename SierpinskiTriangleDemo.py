@@ -63,7 +63,7 @@ def degree(p1, p2):
 
 # Draws the point with the given color.
 def draw(p1, color):
-    pygame.draw.circle(display_surf, color, p1, 2, 2)
+    pygame.draw.circle(display_surf, color, p1, 1, 1)
 
 
 # Checks if the program is closed.
